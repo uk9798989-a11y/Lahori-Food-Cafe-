@@ -1,0 +1,6 @@
+{
+  "name": "Lahori Food Cafe",
+  "description": "Official food ordering and restaurant management app for Lahori Food Cafe, Taranda Muhammad Panah.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

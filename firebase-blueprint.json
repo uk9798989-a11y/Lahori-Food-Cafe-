@@ -1,0 +1,220 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Customer profile and saved delivery addresses",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "displayName": { "type": "string", "description": "Customer full name" },
+        "email": { "type": "string", "description": "Customer email" },
+        "phone": { "type": "string", "description": "Customer phone number" },
+        "savedAddresses": { "type": "array", "description": "Up to 10 saved delivery addresses" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update" }
+      },
+      "required": ["userId", "displayName", "createdAt", "updatedAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Authorized cafe administrator record",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["owner", "manager"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email", "role", "createdAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Food menu category",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "group": { "type": "string", "enum": ["PIZZA", "FAST_FOOD"] },
+        "displayOrder": { "type": "integer" },
+        "imageKey": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "group", "displayOrder", "imageKey", "isActive", "createdAt", "updatedAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Menu food product with size prices and customization options",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "categoryName": { "type": "string" },
+        "group": { "type": "string", "enum": ["PIZZA", "FAST_FOOD"] },
+        "description": { "type": "string" },
+        "basePrice": { "type": "integer" },
+        "sizePrices": { "type": "object", "description": "Map of size label to PKR price" },
+        "supportsPizzaCustomizations": { "type": "boolean" },
+        "supportsExtraCheeseSlice": { "type": "boolean" },
+        "priceVerified": { "type": "boolean" },
+        "isAvailable": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "isPopular": { "type": "boolean" },
+        "isNewArrival": { "type": "boolean" },
+        "imageKey": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "displayOrder": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "categoryId", "categoryName", "group", "description", "basePrice", "priceVerified", "isAvailable", "isActive", "imageKey", "displayOrder", "createdAt", "updatedAt"]
+    },
+    "Deal": {
+      "title": "Deal",
+      "description": "Official special deal bundle from Lahori Food Cafe deals menu",
+      "type": "object",
+      "properties": {
+        "dealNumber": { "type": "string" },
+        "title": { "type": "string" },
+        "itemsSummary": { "type": "string" },
+        "drinkInfo": { "type": "string" },
+        "price": { "type": "integer" },
+        "note": { "type": "string" },
+        "imageKey": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" },
+        "displayOrder": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["dealNumber", "title", "itemsSummary", "drinkInfo", "price", "imageKey", "isActive", "displayOrder", "createdAt", "updatedAt"]
+    },
+    "Banner": {
+      "title": "Banner",
+      "description": "Promotional home banner",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "badgeText": { "type": "string" },
+        "imageKey": { "type": "string" },
+        "targetRoute": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "displayOrder": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "subtitle", "badgeText", "imageKey", "targetRoute", "isActive", "displayOrder", "createdAt", "updatedAt"]
+    },
+    "CafeSettings": {
+      "title": "CafeSettings",
+      "description": "Delivery, minimum order, opening hours, and temporary closure settings",
+      "type": "object",
+      "properties": {
+        "minDeliveryOrder": { "type": "integer" },
+        "deliveryFee": { "type": "integer" },
+        "isFreeDelivery": { "type": "boolean" },
+        "isDeliveryEnabled": { "type": "boolean" },
+        "isAcceptingOrders": { "type": "boolean" },
+        "openingHours": { "type": "string" },
+        "closureNotice": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["minDeliveryOrder", "deliveryFee", "isFreeDelivery", "isDeliveryEnabled", "isAcceptingOrders", "openingHours", "whatsappNumber", "updatedAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer direct app order or admin-recorded WhatsApp order",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "orderCode": { "type": "string" },
+        "orderSource": { "type": "string", "enum": ["APP", "WHATSAPP"] },
+        "orderType": { "type": "string", "enum": ["DELIVERY", "TAKEAWAY", "DINE_IN"] },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Pending WhatsApp Confirmation",
+            "Order Received",
+            "Order Confirmed",
+            "Preparing",
+            "Ready",
+            "Out for Delivery",
+            "Completed",
+            "Cancelled"
+          ]
+        },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "deliveryAddress": { "type": "string" },
+        "specialInstructions": { "type": "string" },
+        "items": { "type": "array", "description": "Verified order line items" },
+        "subtotal": { "type": "integer" },
+        "deliveryFee": { "type": "integer" },
+        "total": { "type": "integer" },
+        "priceVerified": { "type": "boolean" },
+        "adminNote": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "orderCode", "orderSource", "orderType", "status", "customerName", "customerPhone", "items", "subtotal", "deliveryFee", "total", "priceVerified", "createdAt", "updatedAt"]
+    },
+    "AppNotification": {
+      "title": "AppNotification",
+      "description": "Order status and admin alert notification",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "targetRole": { "type": "string", "enum": ["CUSTOMER", "ADMIN"] },
+        "orderId": { "type": "string" },
+        "orderCode": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "senderId", "targetRole", "orderId", "orderCode", "title", "message", "isRead", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Customer profiles and saved delivery addresses"
+    },
+    "/admins/{userId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Authorized admin role registry"
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Food categories"
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Menu food products"
+    },
+    "/deals/{dealId}": {
+      "schema": { "$ref": "#/entities/Deal" },
+      "description": "Special deals"
+    },
+    "/banners/{bannerId}": {
+      "schema": { "$ref": "#/entities/Banner" },
+      "description": "Promotional home banners"
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/CafeSettings" },
+      "description": "Cafe operational settings"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/AppNotification" },
+      "description": "Customer and admin notifications"
+    }
+  }
+}
